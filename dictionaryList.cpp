@@ -151,9 +151,15 @@ DictionaryList& DictionaryList::operator =(const DictionaryList& rhs)
 DictionaryList::~DictionaryList()
 {
     // Students should replace these messages with proper code.
-    exit(1);
-    cout << "\nWARNING: the destructor of class DictionaryList fails, because it is not properly implemented.";
-    cout << " Students should fix it nd remove this warning." << endl;
+    // exit(1);
+    // cout << "\nWARNING: the destructor of class DictionaryList fails, because it is not properly implemented.";
+    // cout << " Students should fix it nd remove this warning." << endl;
+    Node *current = headM;
+    while (current != nullptr){
+        Node *next = current -> nextM;
+        delete current;
+        headM = next;
+    }
 }
 
 void DictionaryList::find(const int& keyA)
