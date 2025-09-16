@@ -142,22 +142,27 @@ DictionaryList::DictionaryList(const DictionaryList& source)
 
 DictionaryList& DictionaryList::operator =(const DictionaryList& rhs)
 {
-    // Students should replace these messages with proper code.
-    cout << "\nWARNING: DictionaryList::operator= failed, because it is not properly implemented.";
-    cout << " Students should fix it nd remove this warning." << endl;
+    if (rhs.headM == nullptr){
+        headM = nullptr;
+        return;
+    }
+    headM = new Node(rhs.headM->keyM,rhs.headM->datumM, rhs.headM->nextM);
+    Node *newTail = headM;
+    Node *orgNext = rhs.headM->nextM;
+
+    while(orgNext != nullptr){
+        newTail->nextM = new Node(orgNext->keyM, orgNext->datumM, orgNext->nextM); 
+        orgNext = orgNext->nextM;
+        newTail = newTail->nextM;
+    }
     return *this;
 }
 
 DictionaryList::~DictionaryList()
 {
-    // Students should replace these messages with proper code.
-    // exit(1);
-    // cout << "\nWARNING: the destructor of class DictionaryList fails, because it is not properly implemented.";
-    // cout << " Students should fix it nd remove this warning." << endl;
-    Node *current = headM;
-    while (current != nullptr){
-        Node *next = current -> nextM;
-        delete current;
+    while(headM){
+        Node *next = headM -> nextM;
+        delete headM;
         headM = next;
     }
 }
@@ -173,6 +178,7 @@ void DictionaryList::find(const int& keyA)
 void DictionaryList::make_empty()
 {
     // Students should replace these messages with proper code.
-    cout << "\nWARNING: call to the function make_empty failed, because it is not properly implemented.";
-    cout << " Students should fix it and remove this warning." << endl;
+    // cout << "\nWARNING: call to the function make_empty failed, because it is not properly implemented.";
+    // cout << " Students should fix it and remove this warning." << endl;
+
 }
