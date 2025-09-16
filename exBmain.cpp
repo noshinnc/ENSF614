@@ -18,7 +18,7 @@ int main()
     // implementation of operator=, copy ctor, destructor, and make_empty member
     // funcitons.
     
-#if 0
+#if 1
     test_copying();
 #endif
     
