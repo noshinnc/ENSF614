@@ -26,7 +26,7 @@ int main()
     // studnets must change the following #if 0 to #if 1 and complete the
     // implementation of member function find.
     
-#if 0
+#if 1
     test_finding(dl);
 #endif
     return 0;

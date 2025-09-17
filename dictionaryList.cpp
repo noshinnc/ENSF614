@@ -134,71 +134,123 @@ void DictionaryList::step_fwd()
 // Replace them with the definitions that work.
 
 DictionaryList::DictionaryList(const DictionaryList& source)
+: sizeM(0), headM(0), cursorM(0)
 {
-    if (source.headM == nullptr){
-        headM = nullptr;
-    }
-    headM = new Node(source.headM->keyM,source.headM->datumM, source.headM->nextM);
-    Node *newTail = headM;
-    Node *orgNext = source.headM->nextM;
+    if (source.headM == 0)
+        return;
 
-    while(orgNext != nullptr){
-        newTail->nextM = new Node(orgNext->keyM, orgNext->datumM, orgNext->nextM); 
-        orgNext = orgNext->nextM;
+    headM = new Node(source.headM->keyM, source.headM->datumM, 0);
+    Node *newTail = headM;
+    if (source.cursorM == source.headM)
+        cursorM = newTail;
+
+    Node *orgNext = source.headM->nextM;
+    while (orgNext != 0) {
+        newTail->nextM = new Node(orgNext->keyM, orgNext->datumM, 0);
         newTail = newTail->nextM;
+        if (orgNext == source.cursorM)
+            cursorM = newTail;
+        orgNext = orgNext->nextM;
     }
+    sizeM = source.sizeM;
 }
+
 
 DictionaryList& DictionaryList::operator =(const DictionaryList& rhs)
 {
-    if (this == &rhs){
+    if (this == &rhs)
         return *this;
-    }
-    while(this->headM != nullptr){
-        Node *next = this->headM->nextM;
-        delete this->headM;
-        this->headM = next; 
-    }
-    if(rhs.headM == nullptr){
-        return;
-    }
-    this.head = new Node(rhs.headM.keyA, rhs.headM.datumA, rhs.headM.nextA);
 
-    curLsh = this.head.next;
-    curRsh = rhs.head.next;
-
-    while(curRhs != nullptr){
-        curLsh.next = new Node(curRsh.headM.keyA, curRsh.headM.datumA, curRsh.headM.nextA;
-        curLsh = curLhs.nextA;
-        curRhs = curRhs.nextA;
-    }
-    return *this;
-}
-
-DictionaryList::~DictionaryList()
-{
-    while(headM){
-        Node *next = headM -> nextM;
+    // delete current nodes
+    while (headM != 0) {
+        Node *next = headM->nextM;
         delete headM;
         headM = next;
     }
+    sizeM = 0;
+    cursorM = 0;
+
+    if (rhs.headM == 0) {
+        headM = 0;
+        return *this;
+    }
+
+    headM = new Node(rhs.headM->keyM, rhs.headM->datumM, 0);
+    Node *tail = headM;
+    if (rhs.cursorM == rhs.headM)
+        cursorM = tail;
+
+    for (Node *p = rhs.headM->nextM; p != 0; p = p->nextM) {
+        tail->nextM = new Node(p->keyM, p->datumM, 0);
+        tail = tail->nextM;
+        if (p == rhs.cursorM)
+            cursorM = tail;
+    }
+    sizeM = rhs.sizeM;
+
+    return *this;
 }
 
-void DictionaryList::find(const int& keyA)
+
+DictionaryList::~DictionaryList()
 {
-    // Students should replace these messages with proper code.
-    cout << "\nDon't know how to find " << keyA << " (or any other key).\n";
-    cout << "... so exit is being called.\n";
-    exit(1);
+    while (headM != 0) {
+        Node *next = headM->nextM;
+        delete headM;
+        headM = next;
+    }
+    sizeM = 0;
+    cursorM = 0;
 }
+
 
 void DictionaryList::make_empty()
 {
-    Node *cur = headM;
-    while(cur != nullptr){
-        Node* nextNode = cur-> next;
-        delete cur;
-        cur = nextA;
+    while (headM != 0) {
+        Node *next = headM->nextM;
+        delete headM;
+        headM = next;
     }
-    head = nullptr;
+    sizeM = 0;
+    cursorM = 0;
+}
+void DictionaryList::find(const int& keyA)
+{
+    if (headM == 0) { // empty list
+        cursorM = 0;
+        return;
+    }
+
+    if (keyA < headM->keyM) { // smaller than first key
+        cursorM = 0;
+        return;
+    }
+
+    if (keyA == headM->keyM) { // matches first node
+        cursorM = headM;
+        return;
+    }
+
+    Node *p = headM->nextM;
+
+    if (p == 0) { // no node after head
+        cursorM = 0;
+        return;
+    }
+
+    while (p != 0) {
+        if (keyA < p->keyM) { // passed possible position
+            cursorM = 0;
+            return;
+        }
+
+        if (keyA == p->keyM) { // match found
+            cursorM = p;
+            return;
+        }
+
+        p = p->nextM;
+    }
+
+    cursorM = 0; // not found
 }
