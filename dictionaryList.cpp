@@ -151,12 +151,20 @@ DictionaryList::DictionaryList(const DictionaryList& source)
 
 DictionaryList& DictionaryList::operator =(const DictionaryList& rhs)
 {
-    if this == &rhs{
-        return *this
+    if (this == &rhs){
+        return *this;
+    }
+    while(this->headM != nullptr){
+        Node *next = this->headM->nextM;
+        delete this->headM;
+        this->headM = next; 
+    }
+    if(rhs.headM == nullptr){
+        return;
     }
     
-    while(this.headM.  != nullptr){
-        Node *next = this.head.next
+    while(rhs.headM != nullptr){
+        new Node *
     }
 
     // if (rhs.headM == nullptr){
