@@ -135,27 +135,45 @@ void DictionaryList::step_fwd()
 
 DictionaryList::DictionaryList(const DictionaryList& source)
 {
-    // Students should replace these messages with proper code.
-    cout << "\nWARNING: Copy constructor fails, because it is not properly implemented.";
-    cout << " Students should fix it nd remove this warning." << endl;
-}
-
-DictionaryList& DictionaryList::operator =(const DictionaryList& rhs)
-{
-    if (rhs.headM == nullptr){
+    if (source.headM == nullptr){
         headM = nullptr;
-        return;
     }
-    headM = new Node(rhs.headM->keyM,rhs.headM->datumM, rhs.headM->nextM);
+    headM = new Node(source.headM->keyM,source.headM->datumM, source.headM->nextM);
     Node *newTail = headM;
-    Node *orgNext = rhs.headM->nextM;
+    Node *orgNext = source.headM->nextM;
 
     while(orgNext != nullptr){
         newTail->nextM = new Node(orgNext->keyM, orgNext->datumM, orgNext->nextM); 
         orgNext = orgNext->nextM;
         newTail = newTail->nextM;
     }
-    return *this;
+}
+
+DictionaryList& DictionaryList::operator =(const DictionaryList& rhs)
+{
+    if this == &rhs{
+        return *this
+    }
+    
+    while(this.headM.  != nullptr){
+        Node *next = this.head.next
+    }
+
+    // if (rhs.headM == nullptr){
+    //     headM = nullptr;
+    //     return;
+    // }
+    // delete all nodes in 
+    // headM = new Node(rhs.headM->keyM,rhs.headM->datumM, rhs.headM->nextM);
+    // Node *newTail = headM;
+    // Node *orgNext = rhs.headM->nextM;
+
+    // while(orgNext != nullptr){
+    //     newTail->nextM = new Node(orgNext->keyM, orgNext->datumM, orgNext->nextM); 
+    //     orgNext = orgNext->nextM;
+    //     newTail = newTail->nextM;
+    // }
+    // return *this;
 }
 
 DictionaryList::~DictionaryList()
