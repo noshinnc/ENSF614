@@ -162,26 +162,17 @@ DictionaryList& DictionaryList::operator =(const DictionaryList& rhs)
     if(rhs.headM == nullptr){
         return;
     }
-    
-    while(rhs.headM != nullptr){
-        new Node *
+    this.head = new Node(rhs.headM.keyA, rhs.headM.datumA, rhs.headM.nextA);
+
+    curLsh = this.head.next;
+    curRsh = rhs.head.next;
+
+    while(curRhs != nullptr){
+        curLsh.next = new Node(curRsh.headM.keyA, curRsh.headM.datumA, curRsh.headM.nextA;
+        curLsh = curLhs.nextA;
+        curRhs = curRhs.nextA;
     }
-
-    // if (rhs.headM == nullptr){
-    //     headM = nullptr;
-    //     return;
-    // }
-    // delete all nodes in 
-    // headM = new Node(rhs.headM->keyM,rhs.headM->datumM, rhs.headM->nextM);
-    // Node *newTail = headM;
-    // Node *orgNext = rhs.headM->nextM;
-
-    // while(orgNext != nullptr){
-    //     newTail->nextM = new Node(orgNext->keyM, orgNext->datumM, orgNext->nextM); 
-    //     orgNext = orgNext->nextM;
-    //     newTail = newTail->nextM;
-    // }
-    // return *this;
+    return *this;
 }
 
 DictionaryList::~DictionaryList()
@@ -203,8 +194,11 @@ void DictionaryList::find(const int& keyA)
 
 void DictionaryList::make_empty()
 {
-    // Students should replace these messages with proper code.
-    // cout << "\nWARNING: call to the function make_empty failed, because it is not properly implemented.";
-    // cout << " Students should fix it and remove this warning." << endl;
-
+    Node *cur = headM;
+    while(cur != nullptr){
+        Node* nextNode = cur-> next;
+        delete cur;
+        cur = nextA;
+    }
+    head = nullptr;
 }
